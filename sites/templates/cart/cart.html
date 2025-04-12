@@ -1,0 +1,35 @@
+{% extends 'base1.html' %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Votre panier</h2>
+    {% if cart_items %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Produit</th>
+                <th>Quantité</th>
+                <th>Prix</th>
+                <th>Total</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in cart_items %}
+            <tr>
+                <td>{{ item.product.name }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.product.price }}XAF</td>
+                <td>{{ item.quantity|floatformat:2 }}</td>
+                <td>
+                    <a href="{% url 'remove_from_cart' item.id %}" class="btn btn-danger btn-sm">Retirer</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="mailto:{{ user.email }}" class="btn btn-success">Passer commande</a>
+    {% else %}
+    <p>Votre panier est vide.</p>
+    {% endif %}
+</div>
+{% endblock %}
